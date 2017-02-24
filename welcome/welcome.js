@@ -9,10 +9,14 @@ angular.module('MV.welcome', ['ngRoute', 'firebase'])
 	});
 }])
 
-.controller('WelcomeCtrl', ['$scope', 'CommonProp', '$firebaseArray', '$firebaseObject' ,
-function($scope, CommonProp, $firebaseArray,$firebaseObject){
+.controller('WelcomeCtrl', ['$scope', 'CommonProp', '$firebaseArray', '$firebaseObject' , '$location',
+function($scope, CommonProp, $firebaseArray,$firebaseObject,$location){
 
 	$scope.username = CommonProp.getUser();
+
+	if(!$scope.username){
+		$location.path('/home');
+	}
 
 	var ref = firebase.database().ref().child('Entradas');
 	$scope.articles = $firebaseArray(ref);
@@ -27,10 +31,8 @@ function($scope, CommonProp, $firebaseArray,$firebaseObject){
 	$scope.updatePost = function(id){
 		var ref = firebase.database().ref().child('Entradas/' + id);
 		var historia_adopcion;
-		if($scope.editPostData.adoptada=="No"){
-				historia_adopcion=null;
-			}else{
-				historia_adopcion=$scope.editPostData.historia_adopcion;
+		if($scope.editPostData.historia_adopcion==undefined || $scope.editPostData.adoptada=="No"){
+				$scope.editPostData.historia_adopcion=null;
 			}
 		ref.update({
 			nombre: $scope.editPostData.nombre,
@@ -42,7 +44,7 @@ function($scope, CommonProp, $firebaseArray,$firebaseObject){
 			edad_mascota: $scope.editPostData.edad_mascota,
 			historia_mascota: $scope.editPostData.historia_mascota,
 			adoptada: $scope.editPostData.adoptada,
-			historia_adopcion: historia_adopcion
+			historia_adopcion: $scope.editPostData.historia_adopcion
 		}).then(function(ref){
 				$("#editModal").modal('hide');
 		},function(error){
@@ -57,6 +59,10 @@ function($scope, CommonProp, $firebaseArray,$firebaseObject){
 	$scope.deletePost = function(deleteEntrada){
 		$scope.articles.$remove(deleteEntrada);
 		$("#deleteModal").modal('hide');
+	};
+
+	$scope.logout = function(){
+		CommonProp.logoutUser();
 	}
 	
 }])

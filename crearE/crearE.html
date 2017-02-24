@@ -29,6 +29,14 @@ function yesnoCheck() {
 	</div>
 </nav>
 
+<div class="container" ng-show="success">
+	<div class="row">
+		<div class="alert alert-success">
+			<strong>Exito!</strong> Tu entrada ha sido guardada. Ya tu y tu mascota estan participando. 
+		</div>
+	</div>
+</div>
+
 <div class="container">
 	<form role="form" name="postForm" ng-submit="createPost()" novalidate="">
 		<legend>Crea tu entrada</legend>
@@ -74,7 +82,7 @@ function yesnoCheck() {
                 <div class="form-group" ng-class="{'has-error': postForm.historia_m.$invalid && postForm.historia_m.$touched}">
 					<label for="historia_m">Cuentanos una historia divertida de tu mascota</label>
 					<textarea name="historia_m" class="form-control" placeholder="Mi mascota tiene un talento especial...erupta." ng-model="article.historia_m" ng-minlength="20" maxlength="400"></textarea>
-					<small class="help-block" ng-show="postForm.historia_m.$error.minlength && postForm.historia_m.$touched">Ingresa una historia corta.</small>
+					<small class="help-block" ng-show="postForm.historia_m.$error.minlength && postForm.historia_m.$touched">Ingresa una historia mas larga.</small>
 				</div>
 
                 <label for="adoptada_m">¿Tu mascota es adoptada?</label>

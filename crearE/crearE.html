@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 
 <script type="text/javascript">
-
 //Esta funcion muestra un campo del formulario basado en una respuesta
 function yesnoCheck() {
     if (document.getElementById('yesCheck').checked) {
@@ -40,18 +39,18 @@ function yesnoCheck() {
                 <div>
                 <div class="form-group">
                 <label for="nombre_y_apellido">Nombre y Apellido</label>
-                    <input type="text" name="nombre" class="form-control" placeholder="nombre" required="" /><br>
-                    <input type="text" name="apellido" class="form-control" placeholder="apellido" required=""/>   
+                    <input type="text" name="nombre" class="form-control" placeholder="nombre" ng-model="article.nombre" required="" /><br>
+                    <input type="text" name="apellido" class="form-control" placeholder="apellido" ng-model="article.apellido" required=""/>   
                 </div>
 
                 <div class="form-group">
                 <label for="cedula">Numero de cedula</label>
-                    <input type="number" name="cedula" class="form-control" placeholder="25418545" required="" />
+                    <input type="number" name="cedula" class="form-control" placeholder="25418545" ng-model="article.cedula" required="" />
                 </div>
 
                 <div class="form-group">
                 <label for="telf">Numero de telefono</label>
-                    <input type="number" name="telf" class="form-control" placeholder="04268049612" required="" />
+                    <input type="number" name="telf" class="form-control" placeholder="04268049612" ng-model="article.telf" required="" />
                 </div>
 
                 <h4 for="titleTxt">Datos de la mascota</h4>
@@ -59,25 +58,30 @@ function yesnoCheck() {
 
                 <div class="form-group">
                 <label for="nombre_y_apellido">Nombre</label>
-                    <input type="text" name="nombre_m" class="form-control" placeholder="nombre" required="" />
+                    <input type="text" name="nombre_m" class="form-control" placeholder="Tyrannosaurus rex" ng-model="article.nombre_m" required="" />
+                </div>
+
+                <div class="form-group">
+                <label for="nombre_y_apellido">Tipo de mascota</label>
+                    <input type="text" name="tipo_m" class="form-control" placeholder="perro" ng-model="article.tipo_m" required="" />
                 </div>
 
                 <div class="form-group">
                 <label for="cedula">Edad en Años y Meses</label>
-                    <input type="number" name="edad_m" class="form-control" placeholder="años,meses" required="" />
+                    <input type="number" name="edad_m" class="form-control" placeholder="años,meses" ng-model="article.edad_m" required="" />
                 </div>
 
                 <div class="form-group" ng-class="{'has-error': postForm.historia_m.$invalid && postForm.historia_m.$touched}">
 					<label for="historia_m">Cuentanos una historia divertida de tu mascota</label>
-					<textarea name="historia_m" class="form-control" placeholder="Mi mascota tiene un talento especial...erupta." ng-model="article.postTxt" ng-minlength="20" maxlength="400"></textarea>
+					<textarea name="historia_m" class="form-control" placeholder="Mi mascota tiene un talento especial...erupta." ng-model="article.historia_m" ng-minlength="20" maxlength="400"></textarea>
 					<small class="help-block" ng-show="postForm.historia_m.$error.minlength && postForm.historia_m.$touched">Ingresa una historia corta.</small>
 				</div>
 
-                <label for="historia_m">¿Tu mascota es adoptada?</label>
+                <label for="adoptada_m">¿Tu mascota es adoptada?</label>
                 <div class="form-group">
                 <div class="radio">
-                <input type="radio" onclick="javascript:yesnoCheck();" name="adoptada_m" id="yesCheck"> Si<br>
-                <input type="radio" onclick="javascript:yesnoCheck();" name="adoptada_m" id="noCheck"> No<br>
+                <input type="radio" onclick="javascript:yesnoCheck();" name="adoptada_m" value="Si" ng-model="article.adoptada_m" id="yesCheck" required=""> Si<br>
+                <input type="radio" onclick="javascript:yesnoCheck();" name="adoptada_m" value="No" ng-model="article.adoptada_m" id="noCheck" required=""> No<br>
                     <div id="ifYes" style="display:none">
                         <div class="form-group" ng-class="{'has-error': postForm.historiaAdop_m.$invalid && postForm.historiaAdop_m.$touched}">
                         <label for="historiaAdop_m">¿Donde la hallaste o adoptaste?</label>
@@ -86,12 +90,11 @@ function yesnoCheck() {
                         </div>
                     </div>
                     <div id="noCheck" style="display:none">
-                        <textarea name="hide" name="historiaAdop_m"></textarea>
                     </div>
                 </div>
 
 				<div class="form-group">
-					<button type="submit" class="btn btn-primary" ng-disabled="postForm.$invalid">Crear la entrada</button>
+					<button type="submit" class="btn btn-primary" ng-disabled="postForm.$invalid">Registrar a tu mascota</button>
 				</div>
 			</div>
 		</div>

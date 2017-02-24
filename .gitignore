@@ -45,3 +45,8 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+bower_components/angular-loader/.bower.json
+bower_components/angular-loader/angular-loader.min.js
+bower_components/angular-mocks/ngMockE2E.js
+bower_components/angular-loader/angular-loader.js
+bower_components/angular-loader/bower.json

@@ -37,9 +37,13 @@ function($scope, $firebaseAuth, $location, CommonProp){
 
     return {
         getUser: function(){
+            if(user == ""){
+				user = localStorage.getItem("userEmail");
+			}
             return user;
         },
         setUser: function(value){
+            localStorage.setItem("userEmail", value);
             user = value;
         }
     };

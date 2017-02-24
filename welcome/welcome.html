@@ -1,4 +1,25 @@
 <!DOCTYPE html>
+
+<script type="text/javascript">
+//Esta funcion muestra un campo de la entrada basado en una respuesta
+function Check() {
+    if (article.historia_adopcion==null) {
+        ('HA').style.display = 'block';
+    }
+    else ('HA').style.display = 'none';
+}
+</script>
+
+<script type="text/javascript">
+//Esta funcion muestra un campo del formulario basado en una respuesta
+function yesnoCheck() {
+    if (document.getElementById('yesCheck').checked) {
+        document.getElementById('ifYes').style.display = 'block';
+    }
+    else document.getElementById('ifYes').style.display = 'none';
+}
+</script>
+
 <html>
 <head>
 	<title>Concurso mi mascota. Bienvenido</title>
@@ -28,6 +49,136 @@
 	</div>
 </div>
 
-</body>
+<div class="container">
+	<div class="row" ng-repeat="article in articles" >
+		<div class="col-md-12 well well-sm">
 
+			<h5>Nombre del dueño y nombre de la mascota</h5>
+			<h4>{{article.nombre}}</h4> <h4>{{article.nombre_mascota}}</h4>
+
+			<h5>Apellido del dueño</h5>
+			<p>{{article.apellido}}</p><br>
+
+			<h5>Cedula del dueño</h5>
+			<p>{{article.cedula}}</p><br>
+
+			<h5>Numero de telefono</h5>
+			<p>{{article.telefono}}</p><br>
+
+			<h5>Nombre de la mascota</h5>
+			<p>{{article.nombre_mascota}}</p><br>
+
+			<h5>Tipo de mascota</h5>
+			<p>{{article.tipo_mascota}}</p><br>
+
+			<h5>Edad de la mascota</h5>
+			<p>{{article.edad_mascota}}</p><br>
+
+			<h5>Historia graciosa de la mascota</h5>
+			<p>{{article.historia_mascota}}</p><br>
+
+			<h5>¿Es adoptada?</h5>
+			<p>{{article.adoptada}}</p><br>
+
+			<div id='HA'>
+			<h5>Historia de adopcion</h5>
+			<p>{{article.historia_adopcion}}</p><br>
+			</div>
+
+			<button type="submit" class="btn btn-sm btn-primary" ng-click="editPost(article.$id)" data-target="#editModal" data-toggle="modal">Editar</button>
+			<button type="submit" class="btn btn-sm btn-danger" ng-click="deleteConfir(article)" data-target="#deleteModal" data-toggle="modal">Borrar</button>
+		</div>
+	</div>
+</div>
+
+<div class="container">
+	<div id="editModal" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4>Modifica tu entrada</h4>
+				</div>
+				<div class="modal-body">
+					<form role="form" name="modiForm" novalidate="">
+
+						<div class="form-group">
+							<label for="nombre">Tu nombre</label>
+							<input type="nombre" name="nombre" class="form-control" ng-model="editPostData.nombre" />
+						</div>
+						<div class="form-group">
+							<label for="apellido">Apellido</label>
+							<textarea name="apellido" class="form-control" ng-model="editPostData.apellido"></textarea>
+						</div>
+						<div class="form-group">
+							<label for="cedula">Cedula</label>
+							<input type="number" name="cedula" class="form-control" placeholder="25418545" ng-model="editPostData.cedula" required="" />
+						</div>
+						<div class="form-group">
+							<label for="telefono">Telefono</label>
+							 <input type="number" name="telefono" class="form-control" placeholder="04268049612" ng-model="editPostData.telefono" required="" />
+						</div>
+						<div class="form-group">
+							<label for="nombre_mascota">Nombre de la Mascota</label>
+							<textarea name="nombre_mascota" class="form-control" ng-model="editPostData.nombre_mascota"></textarea>
+						</div>
+						<div class="form-group">
+							<label for="tipo_mascota">Tipo de mascota</label>
+							<textarea name="tipo_mascota" class="form-control" ng-model="editPostData.tipo_mascota"></textarea>
+						</div>
+						<div class="form-group">
+							<label for="edad_mascota">Edad de la Mascota</label>
+							 <input type="number" name="edad_mascota" class="form-control" placeholder="años,meses" ng-model="editPostData.edad_mascota" required="" />
+						</div>
+						<div class="form-group" ng-class="{'has-error': modiForm.historia_mascota.$invalid && modiForm.historia_mascota.$touched}">
+					<label for="historia_mascota">Historia divertida de tu mascota</label>
+					<textarea name="historia_mascota" class="form-control" placeholder="Mi mascota tiene un talento especial...erupta." ng-model="editPostData.historia_mascota" ng-minlength="20" maxlength="400" required="" ></textarea>
+					<small class="help-block" ng-show="modiForm.historia_mascota.$error.minlength && modiForm.historia_mascota.$touched">Ingresa una historia corta.</small>
+				</div>
+
+                <label for="adoptada">¿Tu mascota es adoptada?</label>
+                <div class="form-group">
+                <div class="radio">
+                <input type="radio" onclick="javascript:yesnoCheck();" align="middle" name="adoptada" value="Si" ng-model="editPostData.adoptada" id="yesCheck" required=""> Si<br>
+                <input type="radio" onclick="javascript:yesnoCheck();" align="middle" name="adoptada" value="No" ng-model="editPostData.adoptada" id="noCheck" required=""> No<br>
+                    <div id="ifYes" style="display:none">
+                        <div class="signature" ng-class="{'has-error': modiForm.historia_adopcion.$invalid && modiForm.historia_adopcion.$touched}">
+                        <label for="historia_adopcion">¿Donde la hallaste o adoptaste?</label>
+                        <textarea name="historia_adopcion" class="form-control" placeholder="La adopte en un refugio..." ng-model="editPostData.historia_adopcion" ng-minlength="5" maxlength="100" ></textarea>
+                        <small class="help-block" ng-show="modiForm.historia_adopcion.$error.minlength && modiForm.historia_adopcion.$touched">Ingresa donde hallaste o adoptaste a tu mascota.</small>
+                        </div>
+                    </div>
+                    <div id="noCheck" style="display:none">
+                    </div>
+                </div>
+					</div>
+					<div class="modal-footer">
+					<button type="button" class="btn btn-sm btn-primary" ng-click="updatePost(editPostData.$id)" ng-disabled="modiForm.$invalid">Actualizar</button>
+					<button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cancelar</button>
+					</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="container">
+	<div id="deleteModal" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header"></div>
+				<div class="modal-body">
+					<p>¿Estas seguro que quieres eliminar esta entrada?</p>
+					<p>Una vez hecho no se podra recuperar</p>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-sm btn-danger" ng-click="deletePost(deleteEntrada)">Borrar</button>
+					<button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Cancelar</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+</body>
 </html>

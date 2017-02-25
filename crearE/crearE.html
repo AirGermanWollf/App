@@ -10,8 +10,57 @@ function yesnoCheck() {
 }
 </script>
 
+<script type="text/javascript">
+    function previewFile() {
+  var preview = document.querySelector('img');
+  var file    = document.querySelector('input[type=file]').files[0];
+  var reader  = new FileReader();
+
+  reader.onloadend = function () {
+    preview.src = reader.result;
+  }
+
+  if (file) {
+    reader.readAsDataURL(file);
+  } else {
+    preview.src = "";
+  }
+}        
+</script>
+
 <html>
 <head>
+
+<link rel="stylesheet"> 
+<style type="text/css"> 
+
+    input[type="file"] {
+  display: block;
+}
+.imageThumb {
+  max-height: 75px;
+  border: 2px solid;
+  padding: 1px;
+  cursor: pointer;
+}
+.pip {
+  display: inline-block;
+  margin: 10px 10px 0 0;
+}
+.remove {
+  display: block;
+  background: #444;
+  border: 1px solid black;
+  color: white;
+  text-align: center;
+  cursor: pointer;
+}
+.remove:hover {
+  background: white;
+  color: black;
+}
+</style> 
+    
 	<title>Comparte tu mascota con el Mundo!</title>
 </head>
 <body ng-controller="CrearECtrl">
@@ -44,7 +93,7 @@ function yesnoCheck() {
 			<div class="col-md-5">
 
                 <h4 for="titleTxt">Datos del dueño (Tu :D) </h4>
-                <div>
+                <br>
                 <div class="form-group">
                 <label for="nombre_y_apellido">Nombre y Apellido</label>
                     <input type="text" name="nombre" class="form-control" placeholder="nombre" ng-model="article.nombre" required="" /><br>
@@ -62,7 +111,7 @@ function yesnoCheck() {
                 </div>
 
                 <h4 for="titleTxt">Datos de la mascota</h4>
-                <div>
+                <br>
 
                 <div class="form-group">
                 <label for="nombre_y_apellido">Nombre</label>
@@ -100,12 +149,22 @@ function yesnoCheck() {
                     <div id="noCheck" style="display:none">
                     </div>
                 </div>
+                </div>
+                
+                <h5 for="titleTxt">Sube hasta tres fotos de tu mascota. Entre mas fotos subas mas chances tienen de ganar</h5>
+                <br>
 
+
+                <input name="files" type="file" value="upload" id"files" multiple>
+                <button name="fileButton" type="submit" class="form-control" id="fileButton">Sube las fotos</button>
+
+                    <br>
+                    </br>
 				<div class="form-group">
 					<button type="submit" class="btn btn-primary" ng-disabled="postForm.$invalid">Registrar a tu mascota</button>
 				</div>
-			</div>
-		</div>
+                <br>
+                </br>
 	</form>
 </div>
 

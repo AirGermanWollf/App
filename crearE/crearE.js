@@ -10,19 +10,69 @@ angular.module('MV.crearE', ['ngRoute', 'firebase'])
 }])
 
 .controller('CrearECtrl', ['$scope', '$firebaseArray', '$location', 'CommonProp',function($scope, $firebaseArray, $location, CommonProp){
-
-	$scope.username = CommonProp.getUser();
+ 
+    $scope.username = CommonProp.getUser();
 
 	if(!$scope.username){
 		$location.path('/home');
 	}
 
-
 	var ref = firebase.database().ref().child('Entradas');
 	$scope.articles = $firebaseArray(ref);
 
+	$(document).ready(function() {
+		var count = 0;
+  		if (window.File && window.FileList && window.FileReader) {
+		$("#files").on("change", function(e) {
+			var files = e.target.files,
+			filesLength = files.length;
+		for (var i = 0; i < filesLength; i++) {
+			count ++;
+		}
+		if(count>3){
+			alert("Solo se pueden subir tres imagenes");
+		}else{
+			for (var i = 0; i < filesLength; i++) {
+			var f = files[i]
+			var fileReader = new FileReader();
+			fileReader.onload = (function(e) {
+			var file = e.target;
+			$("<span class=\"pip\">" +
+				"<img class=\"imageThumb\" src=\"" + e.target.result + "\" title=\"" + file.name + "\"/>" +
+				"<br/><span class=\"remove\">Quitar Imagen</span>" +
+				"</span>").insertAfter("#files");
+			$(".remove").click(function(){
+				$(this).parent(".pip").remove();
+          });
+          
+        });
+        fileReader.readAsDataURL(f);
+      }
+		}
+    });
+  } else {
+    alert("Your browser doesn't support to File API")
+  }
+});
+
+$(document).ready(function() {
+		var uploader = document.getElementById("uploader");
+		var filesFotos = document.getElementById("files");
+		$("#fileButton").on("click", function(e) {
+			console.log("Entro");
+			var files = e.target.files,
+			filesLength = files.length;
+			for(var i=0; i<2; i++){
+				firebase.storage().ref('Fotos/' + $scope.username + "/" + file[i].name)
+				storage.put(file[i]);
+			}
+		})
+});
+
+
 	$scope.createPost = function(){
 
+		var correo = $scope.username;
 		var nombre = $scope.article.nombre;
 		var apellido = $scope.article.apellido;
 		var cedula = $scope.article.cedula;
@@ -36,8 +86,10 @@ angular.module('MV.crearE', ['ngRoute', 'firebase'])
 			$scope.article.historiaAdop_m=null;
 		}
 		var historia_adopcion = $scope.article.historiaAdop_m;
-		
+		var fotos = document.getElementById("files");
+
 		$scope.articles.$add({
+			correo:correo,
 			nombre: nombre,
 			apellido: apellido,
 			cedula: cedula,
@@ -57,9 +109,14 @@ angular.module('MV.crearE', ['ngRoute', 'firebase'])
 					$scope.success = false;
 				});
 			}, 2000);
-		}, function(error){
+		}, function(e){
 			console.log(error);
 		});
+		$location.path('/home');
+	};
+	
+	$scope.remove = function(array, index){
+    	array.splice(index, 1);
 	};
 
 }]);

@@ -10,5 +10,5 @@ angular.module('MV', [
 ]).
 config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
 
-  $routeProvider.otherwise({redirectTo: '/home'});
+  $routeProvider.otherwise({redirectTo: '/crearE'});
 }]);

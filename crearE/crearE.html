@@ -10,23 +10,7 @@ function yesnoCheck() {
 }
 </script>
 
-<script type="text/javascript">
-    function previewFile() {
-  var preview = document.querySelector('img');
-  var file    = document.querySelector('input[type=file]').files[0];
-  var reader  = new FileReader();
 
-  reader.onloadend = function () {
-    preview.src = reader.result;
-  }
-
-  if (file) {
-    reader.readAsDataURL(file);
-  } else {
-    preview.src = "";
-  }
-}        
-</script>
 
 <html>
 <head>
@@ -47,7 +31,23 @@ function yesnoCheck() {
   display: inline-block;
   margin: 10px 10px 0 0;
 }
-.remove {
+.remove0 {
+  display: block;
+  background: #444;
+  border: 1px solid black;
+  color: white;
+  text-align: center;
+  cursor: pointer;
+}
+.remove1 {
+  display: block;
+  background: #444;
+  border: 1px solid black;
+  color: white;
+  text-align: center;
+  cursor: pointer;
+}
+.remove2 {
   display: block;
   background: #444;
   border: 1px solid black;
@@ -95,9 +95,18 @@ function yesnoCheck() {
                 <h4 for="titleTxt">Datos del dueño (Tu :D) </h4>
                 <br>
                 <div class="form-group">
+                    
                 <label for="nombre_y_apellido">Nombre y Apellido</label>
                     <input type="text" name="nombre" class="form-control" placeholder="nombre" ng-model="article.nombre" required="" /><br>
                     <input type="text" name="apellido" class="form-control" placeholder="apellido" ng-model="article.apellido" required=""/>   
+                </div>
+
+                <div class="form-group" ng-class="{'has-error': postForm.email.$invalid && 
+                postForm.email.$touched}">
+                <label for="email">Direccion de Correo</label>
+                    <input type="email" name="email"  ng-model="article.email"   class="form-control" placeholder="correo" required="" />
+                    <small class="help-block" ng-show="postForm.email.$invalid && postForm.email.$touched"> 
+                    Porfavor ingresa una direccion de correo valida.</small>
                 </div>
 
                 <div class="form-group">
@@ -151,13 +160,14 @@ function yesnoCheck() {
                 </div>
                 </div>
                 
-                <h5 for="titleTxt">Sube hasta tres fotos de tu mascota. Entre mas fotos subas mas chances tienen de ganar</h5>
+                <h4 for="titleTxt">Sube hasta tres fotos de tu mascota. Entre mas fotos subas mas chances tienen de ganar</h4>
                 <br>
-
-
-                <input name="files" type="file" value="upload" id"files" multiple>
-                <button name="fileButton" type="submit" class="form-control" id="fileButton">Sube las fotos</button>
-
+                
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+                <div class="field" align="left">
+                <input type="file" id="files" name="files[]" ng-model="article.fotos" ng-disabled="postForm.$invalid" multiple />
+                </div>
+                <br>
                     <br>
                     </br>
 				<div class="form-group">

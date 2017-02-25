@@ -10,7 +10,13 @@ angular.module('MV.registro', ['ngRoute', 'firebase'])
 }])
 
 
-.controller('RegistroCtrl', ['$scope', '$firebaseAuth', '$location', function($scope, $firebaseAuth, $location){
+.controller('RegistroCtrl', ['$scope', '$firebaseAuth', '$location','CommonProp', function($scope, $firebaseAuth, $location,CommonProp){
+
+	$scope.username = CommonProp.getUser();
+
+	if(!$scope.username){
+		$location.path('/home');
+	}
 
 	$scope.signUp = function(){
 		var username = $scope.user.email;
